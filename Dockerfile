@@ -1,22 +1,16 @@
-# ベースイメージ
-FROM ruby:3.2
+# Rubyのベースイメージを使用（最新のRubyバージョンを指定）
+FROM ruby:3.1
 
-# Node.jsとnpm、Yarn、PostgreSQLクライアントをインストール
-RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client && \
-    npm install -g yarn
+# Node.jsとPostgreSQLクライアントのインストール
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
-# 作業ディレクトリを設定
+# 作業ディレクトリの設定
 WORKDIR /app
 
-# GemfileとGemfile.lockをコピーし、インストール
-COPY Gemfile* ./
+# GemfileとGemfile.lockをコピーしてbundle installを実行
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 
-# アプリケーションコードをコピー
-COPY . .
-
-# サーバーポート
-EXPOSE 3000
-
-# サーバーの起動コマンド
-CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+# アプリケーションのコードをコピー
+COPY . /app
