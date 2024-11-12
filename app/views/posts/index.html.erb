@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>つぶやき一覧</h1>
+
+<div id="posts">
+  <%= render @posts %>
+</div>
+
+<h2>新しいつぶやきを投稿</h2>
+<form id="new-post-form" data-posts-path="<%= posts_path %>">
+  <textarea name="post[content]" placeholder="ここに入力..."></textarea>
+  <button type="submit">投稿</button>
+</form>
