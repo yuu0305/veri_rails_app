@@ -1,0 +1,19 @@
+<div id="<%= dom_id user %>">
+
+  <% if user.profile_image.attached? %>
+    <%= image_tag user.profile_image, alt: "Profile Image" %>
+  <% else %>
+    <p>No profile image uploaded.</p>
+  <% end %>
+
+  <p>
+    <strong>Name:</strong>
+    <%= user.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= user.email %>
+  </p>
+
+</div>

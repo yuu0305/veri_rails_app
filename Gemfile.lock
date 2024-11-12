@@ -227,6 +227,7 @@ PLATFORMS
   aarch64-linux
 
 DEPENDENCIES
+  activestorage
   bootsnap
   capybara
   debug
