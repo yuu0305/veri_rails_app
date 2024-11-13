@@ -1,13 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<p id="notice" style="color: green"><%= notice %></p>
 
-<%= render @contact %>
+<div id="contact-details">
+  <%= render @contact %>
 
-<% if @contact.avatar.present? %>
-  <p>
-    <strong>Avatar:</strong>
-    <%= image_tag @contact.avatar.url %>
-  </p>
-<% end %>
+  <% if @contact.avatar.present? %>
+    <p>
+      <strong>Avatar:</strong>
+      <%= image_tag @contact.avatar.url %>
+    </p>
+  <% end %>
+</div>
 
 <div>
   <%= link_to "Edit this contact", edit_contact_path(@contact) %> |

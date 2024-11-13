@@ -23,10 +23,14 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
 
-    if @contact.save
-      redirect_to @contact, notice: 'Contact was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @contact.save
+        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
+        format.json { render json: @contact.as_json.merge(avatar_url: @contact.avatar.url), status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: { errors: @contact.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

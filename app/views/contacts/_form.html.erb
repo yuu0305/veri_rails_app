@@ -1,6 +1,6 @@
-<%= form_with(model: contact, local: true, html: { multipart: true }) do |form| %>
+<%= form_with(model: contact, local: true, id: "contact-form", html: { multipart: true }) do |form| %>
   <% if contact.errors.any? %>
-    <div style="color: red">
+    <div id="error-messages" style="color: red">
       <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
       <ul>
         <% contact.errors.full_messages.each do |message| %>

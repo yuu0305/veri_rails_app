@@ -1,14 +1,39 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Contacts</h1>
 
-<div id="contacts">
+<p id="notice" style="color: green"></p>
+
+<div id="contacts-list">
   <% @contacts.each do |contact| %>
-    <%= render contact %>
-    <p>
-      <%= link_to "Show this contact", contact %>
-    </p>
+    <div>
+      <p><strong>Name:</strong> <%= contact.name %></p>
+      <p><strong>Email:</strong> <%= contact.email %></p>
+      <% if contact.avatar.present? %>
+        <p><strong>Avatar:</strong><br><%= image_tag contact.avatar.url %></p>
+      <% end %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New contact", new_contact_path %>
+<h2>New Contact</h2>
+<%= form_with(model: Contact.new, local: true, id: "contact-form", html: { multipart: true }) do |form| %>
+  <div id="error-messages" style="color: red"></div>
+
+  <div>
+    <%= form.label :name, "Name", for: "contact_name", style: "display: block" %>
+    <%= form.text_field :name, id: "contact_name" %>
+  </div>
+
+  <div>
+    <%= form.label :email, "Email", for: "contact_email", style: "display: block" %>
+    <%= form.text_field :email, id: "contact_email" %>
+  </div>
+
+  <div>
+    <%= form.label :avatar, "Avatar", for: "contact_avatar", style: "display: block" %>
+    <%= form.file_field :avatar, id: "contact_avatar" %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit" %>
+  </div>
+<% end %>
