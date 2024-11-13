@@ -2,10 +2,9 @@
   <% if contact.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
-
       <ul>
-        <% contact.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% contact.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -22,6 +21,6 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Submit" %>
   </div>
 <% end %>
