@@ -2,6 +2,13 @@
 
 <%= render @contact %>
 
+<% if @contact.avatar.present? %>
+  <p>
+    <strong>Avatar:</strong>
+    <%= image_tag @contact.avatar.url %>
+  </p>
+<% end %>
+
 <div>
   <%= link_to "Edit this contact", edit_contact_path(@contact) %> |
   <%= link_to "Back to contacts", contacts_path %>
