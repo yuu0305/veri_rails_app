@@ -6,6 +6,7 @@
   <% @contacts.each do |contact| %>
     <div>
       <p><strong>Name:</strong> <%= contact.name %></p>
+      <p><strong>Email:</strong> <%= contact.email %></p>
       <% if contact.avatar.present? %>
         <p><strong>Avatar:</strong><br><%= image_tag contact.avatar.url %></p>
       <% end %>
@@ -20,6 +21,11 @@
   <div>
     <%= form.label :name, "Name", for: "contact_name", style: "display: block" %>
     <%= form.text_field :name, id: "contact_name" %>
+  </div>
+
+  <div>
+    <%= form.label :email, "Email", for: "contact_email", style: "display: block" %>
+    <%= form.text_field :email, id: "contact_email" %>
   </div>
 
   <div>
