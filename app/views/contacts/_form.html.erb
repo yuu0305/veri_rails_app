@@ -1,0 +1,31 @@
+<%= form_with(model: contact, local: true, id: "contact-form", html: { multipart: true }) do |form| %>
+  <% if contact.errors.any? %>
+    <div id="error-messages" style="color: red">
+      <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
+      <ul>
+        <% contact.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Name", for: "contact_name", style: "display: block" %>
+    <%= form.text_field :name, id: "contact_name" %>
+  </div>
+
+  <div>
+    <%= form.label :email, "Email", for: "contact_email", style: "display: block" %>
+    <%= form.text_field :email, id: "contact_email" %>
+  </div>
+
+  <div>
+    <%= form.label :avatar, "Avatar", for: "contact_avatar", style: "display: block" %>
+    <%= form.file_field :avatar, id: "contact_avatar" %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit" %>
+  </div>
+<% end %>
