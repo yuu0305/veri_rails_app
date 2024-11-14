@@ -11,6 +11,19 @@
   </head>
 
   <body>
+    <header>
+      <% if user_signed_in? %>
+      <p>Welcome, <%= current_user.name %>!</p>
+      <%= link_to 'Edit profile', edit_user_registration_path %> |
+      <%# <%= link_to 'Logout', destroy_user_session_path, method: :delete %> %>
+      <%= form_with url: destroy_user_session_path, method: :delete, local: true do %>
+        <%= submit_tag 'Logout' %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Sign up', new_user_registration_path %> |
+      <%= link_to 'Login', new_user_session_path %>
+    <% end %>
+    </header>
     <%= yield %>
   </body>
 </html>
