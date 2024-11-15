@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # You can make it prettier with:
   get 'about', to: 'static_pages#about'
   resources :users
+  resources :posts, only: [:index, :new, :create, :show]
 
   root 'pages#home'
 end
