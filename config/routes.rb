@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :tasks
   resources :products
   get 'pages/home'
@@ -9,4 +10,6 @@ Rails.application.routes.draw do
   # You can make it prettier with:
   get 'about', to: 'static_pages#about'
   resources :users
+
+  root 'pages#home'
 end
