@@ -1,0 +1,18 @@
+<%# app/views/tasks/index.html.erb %>
+<div class="container mx-auto px-4 py-8">
+  <div id="flash-messages" class="mb-4"></div>
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold mb-4">New Task</h1>
+    <div id="task-form">
+      <%= render 'form' %>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-bold mb-4">Tasks</h2>
+    <div id="tasks-list">
+      <%= render @tasks %>
+    </div>
+  </div>
+</div>

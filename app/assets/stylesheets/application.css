@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.flash-message {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.task-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+}

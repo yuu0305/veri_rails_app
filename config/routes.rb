@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   resources :products
   get 'pages/home'
   get 'pages/about'
