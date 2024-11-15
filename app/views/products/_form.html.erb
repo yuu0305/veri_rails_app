@@ -1,37 +1,58 @@
-<%= form_with(model: product) do |form| %>
+<%# app/views/products/_form.html.erb %>
+<%= form_with(model: product, local: true, html: { multipart: true }) do |form| %>
   <% if product.errors.any? %>
-    <div style="color: red">
+    <div class="error-messages">
       <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
       <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
+  <div class="field">
+    <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="field">
+    <%= form.label :main_image %>
+    <%= form.file_field :main_image, 
+        accept: 'image/png,image/jpeg,image/jpg',
+        direct_upload: true %>
+    <% if product.main_image.attached? %>
+      <p>Current image: <%= product.main_image.filename %></p>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
+  <div class="field">
+    <%= form.label :additional_images %>
+    <%= form.file_field :additional_images, 
+        multiple: true,
+        accept: 'image/png,image/jpeg,image/jpg',
+        direct_upload: true %>
+    <% if product.additional_images.attached? %>
+      <div class="current-images">
+        <p>Current additional images:</p>
+        <% product.additional_images.each do |image| %>
+          <%= image.filename %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.label :stock, style: "display: block" %>
-    <%= form.number_field :stock %>
+  <div class="field">
+    <%= form.label :manual %>
+    <%= form.file_field :manual, 
+        accept: 'application/pdf',
+        direct_upload: true %>
+    <% if product.manual.attached? %>
+      <p>Current manual: <%= product.manual.filename %></p>
+    <% end %>
   </div>
 
-  <div>
+  <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>

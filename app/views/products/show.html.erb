@@ -1,10 +1,32 @@
-<p style="color: green"><%= notice %></p>
+<%# app/views/products/show.html.erb %>
+<div class="product-detail">
+  <h1><%= @product.name %></h1>
 
-<%= render @product %>
+  <% if @product.main_image.attached? %>
+    <div class="main-image">
+      <%= image_tag @product.main_image %>
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Edit this product", edit_product_path(@product) %> |
-  <%= link_to "Back to products", products_path %>
+  <% if @product.additional_images.attached? %>
+    <div class="additional-images">
+      <h2>Additional Images</h2>
+      <div class="image-grid">
+        <% @product.additional_images.each do |image| %>
+          <div class="image-item">
+            <%= image_tag image %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
-  <%= button_to "Destroy this product", @product, method: :delete %>
+  <% if @product.manual.attached? %>
+    <div class="manual">
+      <h2>Product Manual</h2>
+      <%= link_to "Download Manual (PDF)", 
+          rails_blob_path(@product.manual, disposition: "attachment"),
+          class: "download-button" %>
+    </div>
+  <% end %>
 </div>

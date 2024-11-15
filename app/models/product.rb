@@ -1,57 +1,36 @@
 # app/models/product.rb
 class Product < ApplicationRecord
-  # Presence validations
-  validates :name, presence: { message: "Name cannot be blank" }
-  validates :description, presence: true
-  validates :price, presence: true
-  validates :stock, presence: true
+  # Active Storage attachments
+  has_one_attached :main_image
+  has_many_attached :additional_images
+  has_one_attached :manual
 
-  # Length validations
-  validates :name, length: { 
-    minimum: 2, 
-    maximum: 50,
-    too_short: "must have at least %{count} characters",
-    too_long: "must have at most %{count} characters" 
-  }
-  validates :description, length: { maximum: 1000 }
+  # Validations for attachments
+  validates :main_image, attached: true, 
+                        size: { less_than: 5.megabytes, message: 'must be less than 5MB' },
+                        content_type: { in: ['image/png', 'image/jpeg', 'image/jpg'], 
+                                      message: 'must be a PNG, JPEG, or JPG' }
 
-  # Format validation
-  validates :name, format: { 
-    with: /\A[a-zA-Z0-9\s\-]+\z/,
-    message: "can only contain letters, numbers, spaces, and hyphens" 
-  }
+  validates :additional_images, content_type: { in: ['image/png', 'image/jpeg', 'image/jpg'],
+                                              message: 'must be PNG, JPEG, or JPG' },
+                              size: { less_than: 5.megabytes, 
+                                    message: 'must be less than 5MB' },
+                              limit: { max: 5, message: 'cannot have more than 5 images' },
+                              if: :additional_images_attached?
 
-  # Numericality validations
-  validates :price, numericality: { 
-    greater_than_or_equal_to: 0,
-    less_than: 1000000,
-    message: "must be between 0 and 1,000,000" 
-  }
-  
-  validates :stock, numericality: { 
-    only_integer: true,
-    greater_than_or_equal_to: 0,
-    less_than: 10000,
-    message: "must be a whole number between 0 and 10,000" 
-  }
-
-  # Custom validation method
-  validate :description_cannot_contain_restricted_words
-
-  # Callback to clean data before save
-  before_validation :strip_whitespace
+  validates :manual, content_type: { in: 'application/pdf', 
+                                   message: 'must be a PDF' },
+                    size: { less_than: 10.megabytes, 
+                           message: 'must be less than 10MB' },
+                    if: :manual_attached?
 
   private
 
-  def description_cannot_contain_restricted_words
-    restricted_words = ['spam', 'scam', 'fake']
-    if description.present? && restricted_words.any? { |word| description.downcase.include?(word) }
-      errors.add(:description, "contains restricted words")
-    end
+  def additional_images_attached?
+    additional_images.attached?
   end
 
-  def strip_whitespace
-    self.name = name.strip if name.present?
-    self.description = description.strip if description.present?
+  def manual_attached?
+    manual.attached?
   end
 end
